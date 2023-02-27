@@ -1,9 +1,9 @@
-package org.example;
+package org.example.thread;
 
 public class SoutThread extends Thread {
     private final SearchThread searchThread;
 
-    SoutThread(SearchThread searchThread) {
+    public SoutThread(SearchThread searchThread) {
         this.searchThread = searchThread;
     }
 
@@ -11,7 +11,7 @@ public class SoutThread extends Thread {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(250);
+                Thread.sleep(25);
             } catch (InterruptedException e) {
                 return;
             }

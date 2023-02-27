@@ -1,4 +1,4 @@
-package org.example;
+package org.example.service;
 
 import java.io.File;
 import java.util.*;
@@ -37,6 +37,9 @@ public class Service {
                 }
             }
         }
+        if (fileTree.isEmpty()) {
+            throw new RuntimeException("Nothing found at this depth: " + depth);
+        }
         return new ArrayList<>(fileTree);
     }
 
@@ -46,6 +49,9 @@ public class Service {
             if (file.getName().contains(mask)) {
                 filesThatContainsMask.add(file);
             }
+        }
+        if (filesThatContainsMask.isEmpty()) {
+            throw new RuntimeException("No such files found! Mask: " + mask);
         }
         return filesThatContainsMask;
     }

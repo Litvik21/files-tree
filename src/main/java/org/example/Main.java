@@ -1,22 +1,16 @@
 package org.example;
 
-import java.io.File;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import org.example.server.TelnetServer;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
-        Service service = new Service();
-        File rootFile = service.setMainDirectory(new File("/Users/litvik/Desktop/test"));
-        int depth = service.setDepthOfSearching(2);
-        String mask = service.setMask("litvik");
 
-        ExecutorService executor = Executors.newFixedThreadPool(2);
-        SearchThread searchThread = new SearchThread(rootFile, depth, mask);
-        SoutThread soutThread = new SoutThread(searchThread);
-        executor.execute(searchThread);
-        executor.execute(soutThread);
-        Thread.sleep(300);
-        executor.shutdownNow();
+    public static void main(String[] args) {
+        int port = Integer.parseInt(args[0]);
+        String rootPath = args[1];
+        System.out.println("port " + port);
+        System.out.println("rootPath " + rootPath);
+
+        TelnetServer server = new TelnetServer(port, rootPath);
+        server.start();
     }
 }
