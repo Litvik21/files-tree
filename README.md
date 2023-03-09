@@ -14,9 +14,10 @@ This application allows you to walk through the tree of files and find the ones 
 - Maven
 
 ## ⚡️Quickstart
-1. Copy this project
+1. Clone this project
 2. Open project in IDE
 3. Build project -  mvn clean package
 4. Run this command -  java -jar target/tree-1.0-SNAPSHOT.jar Port RootPath
-- For example java -jar target/tree-1.0-SNAPSHOT.jar 8081 /users/litvik/Desktop/test
+- For example: java -jar target/tree-1.0-SNAPSHOT.jar 8081 /Users/litvik/Desktop/test
 5. Start telnet client using the same port
+- For example: o 127.0.0.1 8081

@@ -1,9 +1,12 @@
 package org.example.thread;
 
-public class SoutThread extends Thread {
-    private final SearchThread searchThread;
+import java.util.logging.Logger;
 
-    public SoutThread(SearchThread searchThread) {
+public class OutputInformationThread extends Thread {
+    private final SearchThread searchThread;
+    static Logger LOGGER;
+
+    public OutputInformationThread(SearchThread searchThread) {
         this.searchThread = searchThread;
     }
 
@@ -15,8 +18,8 @@ public class SoutThread extends Thread {
             } catch (InterruptedException e) {
                 return;
             }
-            System.out.println(searchThread.getResultFiles());
+            LOGGER = Logger.getLogger(OutputInformationThread.class.getName());
+            LOGGER.info("Result files" + searchThread.getResultFiles());
         }
-
     }
 }

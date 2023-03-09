@@ -3,7 +3,8 @@ package org.example.service;
 import java.io.File;
 import java.util.*;
 
-public class Service {
+public class TreeServiceImpl implements TreeService {
+    @Override
     public File setMainDirectory(File rootPath) {
         if (!rootPath.isDirectory()) {
             throw new RuntimeException("This is not directory");
@@ -11,6 +12,7 @@ public class Service {
         return rootPath;
     }
 
+    @Override
     public int setDepthOfSearching(int depth) {
         if (depth < 1) {
             throw new RuntimeException("Depth must be greater than 0");
@@ -18,6 +20,7 @@ public class Service {
         return depth;
     }
 
+    @Override
     public String setMask(String mask) {
         if (mask == null || mask.isEmpty()) {
             throw new RuntimeException("Mask must be not null");
@@ -25,6 +28,7 @@ public class Service {
         return mask;
     }
 
+    @Override
     public List<File> searchNeededDepth(File rootPath, int depth) {
         Queue<File> fileTree = new LinkedList<>();
         Collections.addAll(fileTree, rootPath.listFiles());
@@ -43,6 +47,7 @@ public class Service {
         return new ArrayList<>(fileTree);
     }
 
+    @Override
     public List<File> searchNeededFiles(List<File> files, String mask) {
         List<File> filesThatContainsMask = new ArrayList<>();
         for (File file : files) {

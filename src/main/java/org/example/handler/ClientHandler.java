@@ -1,8 +1,9 @@
 package org.example.handler;
 
-import org.example.service.Service;
+import org.example.service.TreeService;
+import org.example.service.TreeServiceImpl;
 import org.example.thread.SearchThread;
-import org.example.thread.SoutThread;
+import org.example.thread.OutputInformationThread;
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
@@ -12,7 +13,8 @@ import java.util.concurrent.Executors;
 public class ClientHandler implements Runnable {
     private final Socket clientSocket;
     private final File rootPath;
-    static ExecutorService executor = Executors.newFixedThreadPool(2);
+    private static final int COUNT_OF_THREAD = 2;
+    private static final ExecutorService executor = Executors.newFixedThreadPool(COUNT_OF_THREAD);
 
     public ClientHandler(Socket clientSocket, File rootPath) {
         this.clientSocket = clientSocket;
@@ -21,7 +23,7 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        Service service = new Service();
+        TreeService service = new TreeServiceImpl();
         try (InputStream inputStream = clientSocket.getInputStream();
              OutputStream outputStream = clientSocket.getOutputStream();
              Scanner scanner = new Scanner(inputStream)) {
@@ -39,9 +41,9 @@ public class ClientHandler implements Runnable {
             printWriter.println("Search criteria set to depth " + depth + " and mask " + mask);
 
             SearchThread searchThread = new SearchThread(rootPath, depth, mask);
-            SoutThread soutThread = new SoutThread(searchThread);
+            OutputInformationThread outputInformationThread = new OutputInformationThread(searchThread);
             executor.execute(searchThread);
-            executor.execute(soutThread);
+            executor.execute(outputInformationThread);
             try {
                 Thread.sleep(30);
             } catch (InterruptedException e) {
@@ -50,7 +52,7 @@ public class ClientHandler implements Runnable {
             executor.shutdownNow();
 
         } catch (IOException e) {
-            System.err.println("Error handling client: " + e.getMessage());
+            throw new RuntimeException("Error handling client: ", e);
         } finally {
             try {
                 clientSocket.close();

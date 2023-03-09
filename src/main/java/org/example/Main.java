@@ -1,14 +1,20 @@
 package org.example;
 
+import java.util.logging.Logger;
 import org.example.server.TelnetServer;
 
 public class Main {
+    static Logger LOGGER;
+    private static final int PORT_INDEX = 0;
+    private static final int ROOT_PATH_INDEX = 1;
 
     public static void main(String[] args) {
-        int port = Integer.parseInt(args[0]);
-        String rootPath = args[1];
-        System.out.println("port " + port);
-        System.out.println("rootPath " + rootPath);
+        LOGGER = Logger.getLogger(Main.class.getName());
+
+        int port = Integer.parseInt(args[PORT_INDEX]);
+        String rootPath = args[ROOT_PATH_INDEX];
+        LOGGER.info("port " + port);
+        LOGGER.info("rootPath " + rootPath);
 
         TelnetServer server = new TelnetServer(port, rootPath);
         server.start();

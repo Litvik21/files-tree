@@ -2,7 +2,8 @@ package org.example.thread;
 
 import java.util.List;
 import java.io.File;
-import org.example.service.Service;
+import org.example.service.TreeService;
+import org.example.service.TreeServiceImpl;
 
 public class SearchThread extends Thread {
     private final File rootFile;
@@ -28,7 +29,7 @@ public class SearchThread extends Thread {
             } catch (InterruptedException e) {
                 return;
             }
-            Service service = new Service();
+            TreeService service = new TreeServiceImpl();
 
             List<File> files = service.searchNeededDepth(rootFile, depth);
             resultFiles = service.searchNeededFiles(files, mask);
